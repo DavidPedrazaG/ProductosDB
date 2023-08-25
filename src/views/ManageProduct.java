@@ -380,6 +380,10 @@ public class ManageProduct extends javax.swing.JFrame {
     }//GEN-LAST:event_windowBarMousePressed
 
     private void btnUpdateProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateProductActionPerformed
+        if(txtCode.getText().isEmpty() || txtName.getText().isEmpty() || txtPrice.getText().isEmpty() || txtCategory.getText().isEmpty() || txtDistributor.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Debe completar todos los campos", "Error - Campos Vacios", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         try {
             String code = txtCode.getText();
             String name = txtName.getText();
@@ -431,6 +435,12 @@ public class ManageProduct extends javax.swing.JFrame {
 
     private void txtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKeyTyped
         changes = true;
+        if(evt.getSource().equals(txtPrice)){
+            Character c = evt.getKeyChar();
+            if(!Character.isDigit(c) && !c.toString().equals("")){
+                evt.consume();
+            }
+        }
     }//GEN-LAST:event_txtKeyTyped
 
     /**

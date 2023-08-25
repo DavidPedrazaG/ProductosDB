@@ -359,11 +359,24 @@ public class CreateProduct extends javax.swing.JFrame {
     }//GEN-LAST:event_windowBarMousePressed
 
     private void btnAddProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProductActionPerformed
+        if(txtCode.getText().isEmpty() || txtName.getText().isEmpty() || txtPrice.getText().isEmpty() || txtCategory.getText().isEmpty() || txtDistributor.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Debe completar todos los campos", "Error - Campos Vacios", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         try {
             String code = txtCode.getText();
             String name = txtName.getText();
             String priceStr = txtPrice.getText();
-            double price = Double.parseDouble(priceStr);
+            double price = 0;
+            try {
+                price = Double.parseDouble(priceStr);
+            } catch (Exception e) {
+                try {
+                    throw new Exception("No se pueden ingresar letras en este campo");
+                } catch (Exception ex) {
+                    Logger.getLogger(CreateProduct.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
             String category = txtCategory.getText();
             String distributor = txtDistributor.getText();
             Product product = new Product(code, name, price, category, distributor);
@@ -398,6 +411,12 @@ public class CreateProduct extends javax.swing.JFrame {
 
     private void txtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKeyTyped
         changes = true;
+        if(evt.getSource().equals(txtPrice)){
+            Character c = evt.getKeyChar();
+            if(!Character.isDigit(c) && !c.toString().equals("")){
+                evt.consume();
+            }
+        }
     }//GEN-LAST:event_txtKeyTyped
 
     /**
